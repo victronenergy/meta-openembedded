@@ -3,7 +3,7 @@ HOMEPAGE = "http://www.php.net"
 SECTION = "console/network"
 LICENSE = "PHP-3.0"
 BBCLASSEXTEND = "native"
-DEPENDS = "zlib libxml2 virtual/libiconv php-native lemon-native mysql5 \
+DEPENDS = "zlib libxml2 virtual/libiconv php-native lemon-native \
            libc-client openssl sqlite3"
 DEPENDS_virtclass-native = "zlib-native libxml2-native"
 
@@ -28,10 +28,7 @@ EXTRA_OECONF = "--enable-mbstring --enable-discard-path --enable-wddx \
                 --with-iconv=${STAGING_LIBDIR}/.. \
                 --with-libxml-dir=${STAGING_BINDIR_CROSS} \
                 --disable-embedded-mysqli \
-                --with-mysql="${STAGING_DIR_TARGET}${prefix}" \
-                --with-mysqli="${STAGING_BINDIR_CROSS}/mysql_config" \
-		--with-sqlite3=${STAGING_LIBDIR}/.. --enable-sqlite-utf8 \
-                --with-pdo-mysql="${STAGING_BINDIR_CROSS}/mysql_config" \
+				--with-sqlite3=${STAGING_LIBDIR}/.. --enable-sqlite-utf8 \
                 --with-pdo-sqlite=${STAGING_LIBDIR}/.. ${COMMON_EXTRA_OECONF} \
                "
 EXTRA_OECONF_virtclass-native = "--with-cgi --without-libpng --without-libjpeg \
