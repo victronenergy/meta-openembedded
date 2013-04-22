@@ -4,16 +4,13 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=751419260aa954499f7abaabaa882bbe"
 DEPENDS = "libxml2 libxslt"
 
-PR = "r3"
+PR = "r2"
 
 SECTION = "net"
 
 SRC_URI = "http://hiawatha-webserver.org/files/${PN}-${PV}.tar.gz \
            file://hiawatha-init \
-           file://xslt-fix.patch \
-           file://hiawatha.conf \ 
-           file://phpinfo.php \           
-           "
+           file://xslt-fix.patch "
 
 SRC_URI[md5sum] = "372ea9e8329ed36e4fb781fdc1a6734c"
 SRC_URI[sha256sum] = "1a7fa98ce66beb54fc8490cc787461d719a98cb0e4a81caedfa18ac8b5ba3b3b"
@@ -49,9 +46,7 @@ do_install_append() {
 
     # configure php-fcgi to have a working configuration
     # by default if php is installed
-    #echo "Server = ${bindir}/php-cgi ; 2 ; 127.0.0.1:2005 ; nobody:nobody ; ${sysconfdir}/php/hiawatha-php5/php.ini" >> ${D}${sysconfdir}/hiawatha/php-fcgi.conf
-    install -m 0644 ${WORKDIR}/hiawatha.conf ${D}${sysconfdir}/hiawatha/hiawatha.conf
-    install -m 0644 ${WORKDIR}/phpinfo.php ${D}${localstatedir}/www/hiawatha/phpinfo.php
+    echo "Server = ${bindir}/php-cgi ; 2 ; 127.0.0.1:2005 ; nobody:nobody ; ${sysconfdir}/php/hiawatha-php5/php.ini" >> ${D}${sysconfdir}/hiawatha/php-fcgi.conf
 }
 
 CONFFILES_${PN} = " \
