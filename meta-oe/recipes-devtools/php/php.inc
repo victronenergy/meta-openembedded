@@ -3,7 +3,7 @@ HOMEPAGE = "http://www.php.net"
 SECTION = "console/network"
 LICENSE = "PHP-3.0"
 BBCLASSEXTEND = "native"
-DEPENDS = "zlib libxml2 virtual/libiconv php-native lemon-native \
+DEPENDS = "zlib libxml2 virtual/libiconv php-native lemon-native mysql5 \
            libc-client openssl sqlite3"
 DEPENDS_virtclass-native = "zlib-native libxml2-native"
 
@@ -21,12 +21,17 @@ SSTATE_SCAN_FILES += "build-defs.h"
 COMMON_EXTRA_OECONF = "--enable-sockets --enable-pcntl --enable-shared"
 EXTRA_OECONF = "--enable-mbstring --enable-discard-path --enable-wddx \
                 --enable-magic-quotes --enable-fastcgi --enable-fpm \
+                --with-imap=${STAGING_DIR_HOST} \
                 --with-gettext=${STAGING_LIBDIR}/.. \
+                --with-imap-ssl=${STAGING_DIR_HOST} \
                 --with-zlib --with-zlib-dir=${STAGING_LIBDIR}/.. \
                 --with-iconv=${STAGING_LIBDIR}/.. \
                 --with-libxml-dir=${STAGING_BINDIR_CROSS} \
                 --disable-embedded-mysqli \
-				--with-sqlite3=${STAGING_LIBDIR}/.. --enable-sqlite-utf8 \
+                --with-mysql="${STAGING_DIR_TARGET}${prefix}" \
+                --with-mysqli="${STAGING_BINDIR_CROSS}/mysql_config" \
+		--with-sqlite3=${STAGING_LIBDIR}/.. --enable-sqlite-utf8 \
+                --with-pdo-mysql="${STAGING_BINDIR_CROSS}/mysql_config" \
                 --with-pdo-sqlite=${STAGING_LIBDIR}/.. ${COMMON_EXTRA_OECONF} \
                "
 EXTRA_OECONF_virtclass-native = "--with-cgi --without-libpng --without-libjpeg \
@@ -55,15 +60,13 @@ do_install_append_pn-php() {
     install -d ${D}/${sysconfdir}/
     mv ${D}/${STAGING_DIR_NATIVE}/${sysconfdir}/* ${D}/${sysconfdir}/
     rm -rf ${D}/${STAGING_DIR_NATIVE}
-    rm -rf ${D}/${TMPDIR}
-    rm -rf ${D}/home
     rm -rf ${D}/.registry
     rm -rf ${D}/.channels
     rm -rf ${D}/.[a-z]*
-    rm -rf ${D}/var
-    rm -f  ${D}/${sysconfdir}/php-fpm.conf.default
     sed -i 's:${STAGING_DIR_NATIVE}::g' ${D}/${sysconfdir}/pear.conf
     install -m 0644 ${WORKDIR}/php-fpm.conf ${D}/${sysconfdir}/php-fpm.conf
+    install -d ${D}/${sysconfdir}/apache2/conf.d
+    install -m 0644 ${WORKDIR}/php-fpm-apache.conf ${D}/${sysconfdir}/apache2/conf.d/php-fpm.conf
     install -d ${D}${sysconfdir}/init.d
     sed -i 's:=/usr/sbin:=${sbindir}:g' ${S}/sapi/fpm/init.d.php-fpm
     sed -i 's:=/etc:=${sysconfdir}:g' ${S}/sapi/fpm/init.d.php-fpm
@@ -71,7 +74,7 @@ do_install_append_pn-php() {
     install -m 0755 ${S}/sapi/fpm/init.d.php-fpm ${D}${sysconfdir}/init.d/php-fpm
 }
 
-PACKAGES = "${PN}-dbg ${PN}-cli ${PN}-cgi ${PN}-fpm ${PN}-pear ${PN}-dev ${PN}-staticdev ${PN}-doc ${PN}"
+PACKAGES = "${PN}-dbg ${PN}-cli ${PN}-cgi ${PN}-fpm ${PN}-fpm-apache2 ${PN}-pear ${PN}-dev ${PN}-staticdev ${PN}-doc ${PN}"
 
 RDEPENDS_${PN}-pear = "${PN}"
 RDEPENDS_${PN}-cli = "${PN}"
@@ -85,6 +88,7 @@ FILES_${PN}-doc += "${libdir}/php/doc"
 FILES_${PN}-cli = "${bindir}/php"
 FILES_${PN}-cgi = "${bindir}/php-cgi"
 FILES_${PN}-fpm = "${sbindir}/php-fpm ${sysconfdir}/php-fpm.conf ${datadir}/fpm ${sysconfdir}/init.d/php-fpm"
+FILES_${PN}-fpm-apache2 = "${sysconfdir}/apache2/conf.d/php-fpm.conf"
 CONFFILES_${PN}-fpm = "${sysconfdir}/php-fpm.conf"
 CONFFILES_${PN}-fpm-apache2 = "${sysconfdir}/apache2/conf.d/php-fpm.conf"
 INITSCRIPT_NAME_${PN}-fpm = "php-fpm"
