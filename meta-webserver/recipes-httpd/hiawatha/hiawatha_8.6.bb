@@ -4,11 +4,11 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=751419260aa954499f7abaabaa882bbe"
 DEPENDS = "libxml2 libxslt"
 
-PR = "r2"
+PR = "r3"
 
 SECTION = "net"
 
-SRC_URI = "http://hiawatha-webserver.org/files/${PN}-${PV}.tar.gz \
+SRC_URI = "http://hiawatha-webserver.org/files/hiawatha-8/${PN}-${PV}.tar.gz \
            file://hiawatha-init \
            file://xslt-fix.patch "
 
