@@ -9,7 +9,7 @@ DEPENDS_virtclass-native = "zlib-native libxml2-native"
 
 INC_PR = "r3"
 
-SRC_URI = "http://www.php.net/distributions/php-${PV}.tar.bz2"
+SRC_URI = "http://museum.php.net/php5/php-${PV}.tar.bz2"
 
 S = "${WORKDIR}/php-${PV}"
 
