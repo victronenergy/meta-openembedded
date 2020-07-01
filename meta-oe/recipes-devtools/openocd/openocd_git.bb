@@ -5,10 +5,10 @@ DEPENDS = "libusb-compat libftdi"
 RDEPENDS_${PN} = "libusb1"
 
 SRC_URI = " \
-    git://repo.or.cz/openocd.git;protocol=http;name=openocd \
-    git://repo.or.cz/r/git2cl.git;protocol=http;destsuffix=tools/git2cl;name=git2cl \
-    git://repo.or.cz/r/jimtcl.git;protocol=http;destsuffix=git/jimtcl;name=jimtcl \
-    git://repo.or.cz/r/libjaylink.git;protocol=http;destsuffix=git/src/jtag/drivers/libjaylink;name=libjaylink \
+    git://git.code.sf.net/p/openocd/code;protocol=git;name=openocd \
+    git://git.savannah.gnu.org/git2cl.git;protocol=git;destsuffix=tools/git2cl;name=git2cl \
+    git://github.com/msteveb/jimtcl.git;protocol=git;destsuffix=git/jimtcl;name=jimtcl \
+    git://gitlab.zapb.de/libjaylink/libjaylink.git;protocol=https;destsuffix=git/src/jtag/drivers/libjaylink;name=libjaylink \
     file://0001-Fix-libusb-1.0.22-deprecated-libusb_set_debug-with-l.patch \
 "
 
