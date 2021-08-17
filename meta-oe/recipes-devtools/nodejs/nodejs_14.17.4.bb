@@ -1,7 +1,7 @@
 DESCRIPTION = "nodeJS Evented I/O for V8 JavaScript"
 HOMEPAGE = "http://nodejs.org"
 LICENSE = "MIT & BSD & Artistic-2.0"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=a1016f9b7979cfe6fc3466a9bba60b1e"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=948e11aebf5993a73c6d7a022895ff74"
 
 DEPENDS = "openssl"
 DEPENDS_append_class-target = " qemu-native"
@@ -28,7 +28,7 @@ SRC_URI_append_class-target = " \
 SRC_URI_append_toolchain-clang_powerpc64le = " \
            file://0001-ppc64-Do-not-use-mminimal-toc-with-clang.patch \
            "
-SRC_URI[sha256sum] = "ddf1d2d56ddf35ecd98c5ea5ddcd690b245899f289559b4330c921255f5a247f"
+SRC_URI[sha256sum] = "ae7bf4e784f8c8027ffa1e3757f37d2bd5925d0c48988c4d7f07e4515853cf2c"
 
 S = "${WORKDIR}/node-v${PV}"
 
