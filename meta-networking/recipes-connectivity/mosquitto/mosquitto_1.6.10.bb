@@ -18,6 +18,7 @@ SRC_URI = "http://mosquitto.org/files/source/mosquitto-${PV}.tar.gz \
            file://mosquitto.init \
            file://1571.patch \
            file://install-protocol.patch \
+           file://CVE-2021-34432.patch \
 "
 
 SRC_URI[md5sum] = "960f963b81b7f93982d7511cd28082e5"
