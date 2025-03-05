@@ -5,6 +5,7 @@ LIC_FILES_CHKSUM = "file://include/linux/can.h;endline=44;md5=a9e1169c6c9a114a61
 DEPENDS = "libsocketcan"
 
 SRC_URI = "git://github.com/linux-can/${BPN}.git;protocol=https;branch=master"
+SRC_URI += "file://0001-fix-time_t-format-use-llu-instead-of-lu.patch"
 
 SRCREV = "cfe41963f3425e9adb01a70cfaddedf5e5982720"
 
