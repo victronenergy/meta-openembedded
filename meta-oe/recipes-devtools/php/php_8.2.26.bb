@@ -6,7 +6,7 @@ LICENSE = "PHP-3.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=fd469cce1a919f0cc95bab7afb28d19d"
 
 BBCLASSEXTEND = "native"
-DEPENDS = "zlib bzip2 libxml2 virtual/libiconv php-native"
+DEPENDS = "php-native"
 DEPENDS:append:libc-musl = " libucontext"
 DEPENDS:class-native = "zlib-native libxml2-native"
 
@@ -54,20 +54,14 @@ SSTATE_SCAN_FILES += "build-defs.h"
 PHP_LIBDIR = "${libdir}/php${PHP_MAJOR_VERSION}"
 
 # Common EXTRA_OECONF
-COMMON_EXTRA_OECONF = "--enable-sockets \
-                       --enable-pcntl \
+COMMON_EXTRA_OECONF = " \
                        --enable-shared \
                        --disable-rpath \
                        --with-pic \
                        --libdir=${PHP_LIBDIR} \
 "
-EXTRA_OECONF = "--enable-mbstring \
-                --enable-fpm \
+EXTRA_OECONF = "--enable-fpm \
                 --with-libdir=${baselib} \
-                --with-gettext=${STAGING_LIBDIR}/.. \
-                --with-zlib=${STAGING_LIBDIR}/.. \
-                --with-iconv=${STAGING_LIBDIR}/.. \
-                --with-bz2=${STAGING_DIR_TARGET}${exec_prefix} \
                 --with-config-file-path=${sysconfdir}/php/apache2-php${PHP_MAJOR_VERSION} \
                 ${@oe.utils.conditional('SITEINFO_ENDIANNESS', 'le', 'ac_cv_c_bigendian_php=no', 'ac_cv_c_bigendian_php=yes', d)} \
                 ${@bb.utils.contains('PACKAGECONFIG', 'pam', '', 'ac_cv_lib_pam_pam_start=no', d)} \
@@ -89,7 +83,8 @@ EXTRA_OECONF:class-native = " \
                 ${COMMON_EXTRA_OECONF} \
 "
 
-PACKAGECONFIG ??= "mysql sqlite3 imap opcache openssl \
+PACKAGECONFIG ??= "mysql sqlite3 imap opcache openssl sockets zlib iconv gettext bz2 libxml pcntl \
+                   fileinfo pdo phar filter posix tokenizer \
                    ${@bb.utils.filter('DISTRO_FEATURES', 'ipv6 pam', d)} \
 "
 PACKAGECONFIG:class-native = ""
@@ -114,11 +109,24 @@ PACKAGECONFIG[imap] = "--with-imap=${STAGING_DIR_HOST} \
                        ,--without-imap --without-imap-ssl \
                        ,uw-imap"
 PACKAGECONFIG[ipv6] = "--enable-ipv6,--disable-ipv6,"
-PACKAGECONFIG[opcache] = "--enable-opcache,--disable-opcache"
+PACKAGECONFIG[opcache] = "--enable-opcache,--disable-opcache --disable-opcache-jit"
 PACKAGECONFIG[openssl] = "--with-openssl,--without-openssl,openssl"
 PACKAGECONFIG[valgrind] = "--with-valgrind=${STAGING_DIR_TARGET}/usr,--with-valgrind=no,valgrind"
 PACKAGECONFIG[mbregex] = "--enable-mbregex, --disable-mbregex, oniguruma"
 PACKAGECONFIG[mbstring] = "--enable-mbstring,,"
+PACKAGECONFIG[sockets] = "--enable-sockets,--disable-sockets"
+PACKAGECONFIG[zlib] = "--with-zlib=${STAGING_LIBDIR}/..,-without-zlib,zlib"
+PACKAGECONFIG[iconv] = "--with-iconv=${STAGING_LIBDIR}/..,--without-iconv,virtual/libiconv"
+PACKAGECONFIG[gettext] = "--with-gettext=${STAGING_LIBDIR}/..,--without-gettext"
+PACKAGECONFIG[bz2] = "--with-bz2=${STAGING_DIR_TARGET}${exec_prefix},--without-bz2,bzip2"
+PACKAGECONFIG[libxml] = ",--without-libxml --disable-dom --disable-xml --disable-simplexml --disable-xmlreader --disable-xmlwriter,libxml2"
+PACKAGECONFIG[pcntl] = "--enable-pcntl"
+PACKAGECONFIG[fileinfo] = ",--disable-fileinfo"
+PACKAGECONFIG[pdo] = ",--disable-pdo"
+PACKAGECONFIG[phar] = ",--disable-phar"
+PACKAGECONFIG[filter] = ",--disable-filter"
+PACKAGECONFIG[posix] = ",--disable-posix"
+PACKAGECONFIG[tokenizer] = ",--disable-tokenizer"
 
 export HOSTCC = "${BUILD_CC}"
 export PHP_NATIVE_DIR = "${STAGING_BINDIR_NATIVE}"
