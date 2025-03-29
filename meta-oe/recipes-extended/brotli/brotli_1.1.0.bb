@@ -11,6 +11,9 @@ SRCREV= "ed738e842d2fbdf2d6459e39267a633c4a9b2f5d"
 
 S = "${WORKDIR}/git"
 
+# strict-aliasing triggers a bus error on ARM
+CFLAGS += "-fno-strict-aliasing"
+
 inherit cmake lib_package
 
 do_install:append () {
