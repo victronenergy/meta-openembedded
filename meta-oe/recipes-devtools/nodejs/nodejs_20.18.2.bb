@@ -27,6 +27,7 @@ SRC_URI = "http://nodejs.org/dist/v${PV}/node-v${PV}.tar.xz \
            file://libatomic.patch \
            file://182d9c05e78.patch \
            file://zlib-fix-pointer-alignment.patch \
+           file://0001-src-fix-build-with-GCC-15.patch \
            file://run-ptest \
            "
 SRC_URI:append:class-target = " \
@@ -40,6 +41,7 @@ SRC_URI[sha256sum] = "69bf81b70f3a95ae0763459f02860c282d7e3a47567c8afaf126cc7781
 S = "${WORKDIR}/node-v${PV}"
 
 CVE_PRODUCT += "node.js"
+CVE_STATUS[CVE-2024-3566] = "not-applicable-platform: Issue only applies on Windows"
 
 # v8 errors out if you have set CCACHE
 CCACHE = ""
