@@ -1,7 +1,7 @@
 DESCRIPTION = "nodeJS Evented I/O for V8 JavaScript"
 HOMEPAGE = "http://nodejs.org"
 LICENSE = "MIT & ISC & BSD-2-Clause & BSD-3-Clause & Artistic-2.0 & Apache-2.0"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=ac91fab5dbaf757274d2b29888f943ef"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=c83fcdcd43ab352be6429ee1fd8827a0"
 
 CVE_PRODUCT = "nodejs node.js"
 
@@ -20,11 +20,14 @@ COMPATIBLE_HOST:riscv32 = "null"
 COMPATIBLE_HOST:powerpc = "null"
 
 SRC_URI = "http://nodejs.org/dist/v${PV}/node-v${PV}.tar.xz \
+           file://0001-Disable-running-gyp-files-for-bundled-deps.patch \
            file://0004-v8-don-t-override-ARM-CFLAGS.patch \
            file://system-c-ares.patch \
            file://0001-liftoff-Correct-function-signatures.patch \
            file://libatomic.patch \
-           file://0001-Revert-stop-using-deprecated-ares_query.patch \
+           file://182d9c05e78.patch \
+           file://zlib-fix-pointer-alignment.patch \
+           file://0001-src-fix-build-with-GCC-15.patch \
            file://run-ptest \
            "
 SRC_URI:append:class-target = " \
@@ -33,7 +36,7 @@ SRC_URI:append:class-target = " \
 SRC_URI:append:toolchain-clang:powerpc64le = " \
            file://0001-ppc64-Do-not-use-mminimal-toc-with-clang.patch \
            "
-SRC_URI[sha256sum] = "5294d9d2915620e819e6892fd7e545b98d650bad36dae54e6527eaac482add98"
+SRC_URI[sha256sum] = "69bf81b70f3a95ae0763459f02860c282d7e3a47567c8afaf126cc778176a882"
 
 S = "${WORKDIR}/node-v${PV}"
 
