@@ -43,10 +43,6 @@ CVE_STATUS[CVE-2024-3566] = "not-applicable-platform: Issue only applies on Wind
 # v8 errors out if you have set CCACHE
 CCACHE = ""
 
-# Use '-flax-vector-conversions' to permit conversions between vectors
-# with differing element types or numbers of subparts
-CFLAGS:append:arm = " -flax-vector-conversions"
-
 def map_nodejs_arch(a, d):
     import re
 
