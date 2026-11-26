@@ -21,6 +21,21 @@ SRC_URI += "file://CVE-2024-52304.patch \
            file://CVE-2026-34513.patch \
            file://CVE-2026-34993.patch \
            file://CVE-2026-34518.patch \
+           file://CVE-2026-34519.patch \
+           file://CVE-2026-34516.patch \
+           file://CVE-2026-34517.patch \
+           file://CVE-2026-34520.patch \
+           file://CVE-2026-34525_p1.patch \
+           file://CVE-2026-34525_p2.patch \
+           file://CVE-2026-47265.patch \
+           file://CVE-2026-50269.patch \
+           file://CVE-2026-54274.patch \
+           file://CVE-2026-54275.patch \
+           file://CVE-2026-54277.patch \
+           file://CVE-2026-54278.patch \
+           file://CVE-2026-54279.patch \
+           file://CVE-2026-54273_p1.patch \
+           file://CVE-2026-54273_p2.patch \
            "
 
 CVE_STATUS[CVE-2026-34515] = "not-applicable-platform: Vulnerability only affects applications running on Windows"
